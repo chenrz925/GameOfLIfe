@@ -7,7 +7,9 @@ package GameOfLife;
  * @author chenrz925
  */
 public class Map {
-    public int SIZE = 10;
+    int SIZE = 10;
+    int sleepTime = 1000;
+    boolean isPause = true;
 
     private boolean[][] map = null;
 
@@ -88,6 +90,13 @@ public class Map {
     public boolean getStateOfPoint(int x, int y) throws Exception {
         if (x >= SIZE && x < 0 && y >= SIZE && y <= SIZE)
             throw new Exception("Bad query.");
+        return map[x][y];
+    }
+
+    public boolean setStateOfPoint(int x, int y, boolean state) throws Exception {
+        if (x >= SIZE && x < 0 && y >= SIZE && y <= SIZE)
+            throw new Exception("Bad query.");
+        map[x][y] = state;
         return map[x][y];
     }
 
