@@ -12,15 +12,21 @@ import java.awt.*;
 public class Control extends JFrame {
 
     Control(Map map) {
-        setLayout(new GridLayout(2, 1));
+        setLayout(new GridLayout(3, 1));
         JButton startAndPause = new JButton("START");
-        JSlider speed = new JSlider(1, 1000, 10);
-        JPanel speedPane = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel startAndPausePane = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        startAndPausePane.add(startAndPause);
+        JSlider speed = new JSlider(1, 500, 10);
+        JPanel speedPane = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel speedText = new JLabel();
         speedPane.add(new JLabel("SPEED "));
         speedPane.add(speed);
+        speedPane.add(speedText);
+        speedText.setText(speed.getValue() + "");
         speed.addChangeListener(e -> {
             (new Thread(() -> {
                 map.sleepTime = 10000 / speed.getValue();
+                speedText.setText(speed.getValue() + "");
             })).start();
         });
         startAndPause.addActionListener(e -> {
@@ -33,9 +39,8 @@ public class Control extends JFrame {
             }
         });
         add(speedPane);
-        add(startAndPause);
+        add(startAndPausePane);
         setSize(200, 400);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setVisible(true);
     }
 }

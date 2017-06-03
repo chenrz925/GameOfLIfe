@@ -11,5 +11,7 @@ public class Main {
         Map map = new Map(80);
         Display display = new Display(map);
         Control control = new Control(map);
+        display.setVisible(true);
+        control.setVisible(true);
     }
 }

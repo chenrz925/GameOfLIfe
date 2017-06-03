@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 /**
  * Created by chenrz925 on 2017/6/3.
@@ -36,14 +37,9 @@ public class Display extends JFrame {
             } while (true);
         })).start();
         panel.setBackground(Color.gray);
-        panel.addMouseListener(new MouseListener() {
+        panel.addMouseMotionListener(new MouseMotionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
+            public void mouseDragged(MouseEvent e) {
                 (new Thread(() -> {
                     int mouseX = e.getX();
                     int mouseY = e.getY();
@@ -54,27 +50,17 @@ public class Display extends JFrame {
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
+                    panel.updateStates(map.getMap());
                 })).start();
             }
 
             @Override
-            public void mouseReleased(MouseEvent e) {
-                panel.updateStates(map.getMap());
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseMoved(MouseEvent e) {
 
             }
         });
         setLocation(200, 0);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible(true);
     }
 }
 
