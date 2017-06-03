@@ -23,6 +23,10 @@ public class Display extends JFrame {
         add(panel);
         (new Thread(() -> {
             do {
+                synchronized (map.isEmpty) {
+                    if (map.isEmpty)
+                        panel.updateStates(map.getMap());
+                }
                 synchronized (map.isPause) {
                     if (!map.isPause) {
                         matrix = map.nextState();
@@ -87,7 +91,7 @@ class DrawPanel extends JPanel {
         colors[2] = Color.GREEN;
         colors[3] = Color.YELLOW;
         colors[4] = Color.BLUE;
-        int color = (int) (Math.random() % 5);
+        color = (int) (Math.random() * 5);
     }
 
     public int getRectSize() {
@@ -104,12 +108,11 @@ class DrawPanel extends JPanel {
         super.paint(g);
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {
-                g.setColor(map[i][j] ? colors[color % 5] : Color.LIGHT_GRAY);
+                g.setColor(map[i][j] ? colors[color] : Color.LIGHT_GRAY);
                 g.fillRect(i * (rectSize), j * (rectSize), rectSize, rectSize);
                 g.setColor(Color.BLACK);
                 g.drawRect(i * (rectSize), j * (rectSize), rectSize, rectSize);
             }
         }
-        color++;
     }
 }

@@ -10,6 +10,7 @@ public class Map {
     int SIZE = 10;
     int sleepTime = 1000;
     Boolean isPause = true;
+    Boolean isEmpty = false;
 
     private boolean[][] map = null;
 
@@ -48,7 +49,7 @@ public class Map {
         else if (aliveCounter == 2) return map[x][y];
         else return false;
     }
-    
+
     public boolean[][] nextState() {
         boolean[][] nextMatrix = new boolean[SIZE][SIZE];
         for (int i = 0; i < SIZE; ++i) {

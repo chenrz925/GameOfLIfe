@@ -38,8 +38,23 @@ public class Control extends JFrame {
                 map.isPause = true;
             }
         });
+        JPanel resetPane = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton reset = new JButton("RESET");
+        reset.addActionListener(e -> {
+            for (int i = 0; i < map.SIZE; ++i) {
+                for (int j = 0; j < map.SIZE; ++j)
+                    try {
+                        map.setStateOfPoint(i, j, false);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+            }
+            map.isEmpty=true;
+        });
+        resetPane.add(reset);
         add(speedPane);
         add(startAndPausePane);
+        add(resetPane);
         setSize(200, 400);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
