@@ -46,8 +46,8 @@ public class MapTest {
                 {false, false, false, false, false, false, false, false, false, true},
                 {false, false, false, false, false, false, false, false, false, true},
                 {false, false, false, false, false, false, false, false, false, true},
-                {false, false, false, false, false, false, false, false, false, true},
-                {false, false, false, false, false, false, false, false, false, true},
+                {false, true,  false, false, false, false, false, false, false, true},
+                {false, true,  true,  false, false, false, false, false, false, true},
         };
         map.setMap(testMatrix);
         map.nextState();
@@ -55,6 +55,7 @@ public class MapTest {
             Assert.assertEquals(map.getStateOfPoint(0, 0), false);
             Assert.assertEquals(map.getStateOfPoint(8, 8), true);
             Assert.assertEquals(map.getStateOfPoint(9, 9), false);
+            Assert.assertEquals(map.getStateOfPoint(8, 2), true);
         } catch (Exception e) {
             e.printStackTrace();
         }

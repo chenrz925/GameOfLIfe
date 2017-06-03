@@ -48,15 +48,7 @@ public class Map {
         else if (aliveCounter == 2) return map[x][y];
         else return false;
     }
-
-    public static void printMatrix(boolean[][] mat) {
-        for (int i = 0; i < mat.length; ++i) {
-            for (int j = 0; j < mat[i].length; ++j) {
-                System.out.print((mat[i][j] ? 1 : 0) + (j == (mat[i].length - 1) ? "\n" : " "));
-            }
-        }
-    }
-
+    
     public boolean[][] nextState() {
         boolean[][] nextMatrix = new boolean[SIZE][SIZE];
         for (int i = 0; i < SIZE; ++i) {

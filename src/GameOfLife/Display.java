@@ -45,12 +45,14 @@ public class Display extends JFrame {
                     int mouseY = e.getY();
                     int indexX = mouseX / panel.getRectSize();
                     int indexY = mouseY / panel.getRectSize();
-                    try {
-                        map.setStateOfPoint(indexX, indexY, true);
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
+                    if (indexX >= 0 && indexX < map.SIZE && indexY >= 0 && indexY < map.SIZE) {
+                        try {
+                            map.setStateOfPoint(indexX, indexY, true);
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                        panel.updateStates(map.getMap());
                     }
-                    panel.updateStates(map.getMap());
                 })).start();
             }
 
@@ -68,6 +70,7 @@ class DrawPanel extends JPanel {
     private boolean[][] map = null;
     private int rectSize = 0;
     private int size = 0;
+    int color = 0;
     Color[] colors = null;
 
     DrawPanel(int size) {
@@ -84,6 +87,7 @@ class DrawPanel extends JPanel {
         colors[2] = Color.GREEN;
         colors[3] = Color.YELLOW;
         colors[4] = Color.BLUE;
+        int color = (int) (Math.random() % 5);
     }
 
     public int getRectSize() {
@@ -98,14 +102,14 @@ class DrawPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        int color = 0;
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {
-                g.setColor(map[i][j] ? colors[color++ % 5] : Color.LIGHT_GRAY);
+                g.setColor(map[i][j] ? colors[color % 5] : Color.LIGHT_GRAY);
                 g.fillRect(i * (rectSize), j * (rectSize), rectSize, rectSize);
                 g.setColor(Color.BLACK);
                 g.drawRect(i * (rectSize), j * (rectSize), rectSize, rectSize);
             }
         }
+        color++;
     }
 }
