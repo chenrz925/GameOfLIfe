@@ -31,24 +31,6 @@ public class Map {
         return map;
     }
 
-/*    public boolean[][] setRandomMap() {
-        int centerX = SIZE / 2;
-        int centerY = SIZE / 2;
-        this.map[centerX][centerY] = true;
-        for (int i = 0; i < SIZE / 2; ++i) {
-            int randomNumberX = ((int) (Math.random() * 3) - 1);
-            int randomNumberY = ((int) (Math.random() * 3) - 1);
-            if (!(this.map[centerX][centerY] && this.map[centerX + randomNumberX][centerY + randomNumberY])) {
-                this.map[centerX + randomNumberX][centerY + randomNumberY] = true;
-                centerX += randomNumberX;
-                centerY += randomNumberY;
-            } else {
-                i--;
-            }
-        }
-        return map;
-    }
-*/
     public boolean nextStateOfPoint(int x, int y) throws Exception {
         if (x >= SIZE && x < 0 && y >= SIZE && y <= SIZE)
             throw new Exception("Bad query.");
@@ -102,20 +84,4 @@ public class Map {
         map[x][y] = state;
         return map[x][y];
     }
-
-    /*public static void main(String[] args) {
-        Map testMap = new Map(10);
-        testMap.setRandomMap();
-        (new Thread(() -> {
-            int times = 5;
-            while (times-- > 0) try {
-                Thread.currentThread().sleep(1000);
-                System.out.println("******************************");
-                printMatrix(testMap.nextState());
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        })).start();
-    }*/
 }

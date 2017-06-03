@@ -47,22 +47,19 @@ public class Display extends JFrame {
                 (new Thread(() -> {
                     int mouseX = e.getX();
                     int mouseY = e.getY();
-                    System.out.println(e.getPoint());
                     int indexX = mouseX / panel.getRectSize();
                     int indexY = mouseY / panel.getRectSize();
                     try {
-                        //matrix[indexX][indexY] = true;
                         map.setStateOfPoint(indexX, indexY, true);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
-                    panel.updateStates(map.getMap());
                 })).start();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                panel.updateStates(map.getMap());
             }
 
             @Override
