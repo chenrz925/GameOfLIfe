@@ -19,15 +19,16 @@ public class Control extends JFrame {
         speedPane.add(new JLabel("SPEED "));
         speedPane.add(speed);
         speed.addChangeListener(e -> {
-            map.sleepTime = 10000 / speed.getValue();
+            (new Thread(() -> {
+                map.sleepTime = 10000 / speed.getValue();
+            })).start();
         });
         startAndPause.addActionListener(e -> {
-            System.out.println(map.isPause);
             if (map.isPause) {
-                startAndPause.setText("START");
+                startAndPause.setText("PAUSE");
                 map.isPause = false;
             } else {
-                startAndPause.setText("PAUSE");
+                startAndPause.setText("START");
                 map.isPause = true;
             }
         });

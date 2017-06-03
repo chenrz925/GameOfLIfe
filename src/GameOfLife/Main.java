@@ -9,7 +9,6 @@ package GameOfLife;
 public class Main {
     public static void main(String[] args) {
         Map map = new Map(80);
-        map.setRandomMap();
         Display display = new Display(map);
         Control control = new Control(map);
     }

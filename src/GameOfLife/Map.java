@@ -9,7 +9,7 @@ package GameOfLife;
 public class Map {
     int SIZE = 10;
     int sleepTime = 1000;
-    boolean isPause = true;
+    Boolean isPause = true;
 
     private boolean[][] map = null;
 
@@ -27,8 +27,11 @@ public class Map {
         return map;
     }
 
+    boolean[][] getMap() {
+        return map;
+    }
 
-    public boolean[][] setRandomMap() {
+/*    public boolean[][] setRandomMap() {
         int centerX = SIZE / 2;
         int centerY = SIZE / 2;
         this.map[centerX][centerY] = true;
@@ -45,7 +48,7 @@ public class Map {
         }
         return map;
     }
-
+*/
     public boolean nextStateOfPoint(int x, int y) throws Exception {
         if (x >= SIZE && x < 0 && y >= SIZE && y <= SIZE)
             throw new Exception("Bad query.");
@@ -100,7 +103,7 @@ public class Map {
         return map[x][y];
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Map testMap = new Map(10);
         testMap.setRandomMap();
         (new Thread(() -> {
@@ -114,5 +117,5 @@ public class Map {
                 e.printStackTrace();
             }
         })).start();
-    }
+    }*/
 }

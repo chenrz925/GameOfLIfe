@@ -12,48 +12,52 @@ import java.awt.event.MouseListener;
  * @author chenrz925
  */
 public class Display extends JFrame {
-    private int labelSize = 0;
 
     boolean[][] matrix;
 
     Display(Map map) {
         setLayout(new CardLayout());
         setSize(800, 800);
-        labelSize = 800 / map.SIZE;
         DrawPanel panel = new DrawPanel(map.SIZE);
         add(panel);
         (new Thread(() -> {
-            while (true) {
-                matrix = map.nextState();
-                panel.UpdateStates(matrix);
-                try {
-                    Thread.currentThread().sleep(map.sleepTime);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            do {
+                synchronized (map.isPause) {
+                    if (!map.isPause) {
+                        matrix = map.nextState();
+                        panel.updateStates(matrix);
+                        try {
+                            Thread.currentThread().sleep(map.sleepTime);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-            }
+            } while (true);
         })).start();
         panel.setBackground(Color.gray);
         panel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int mouseX = e.getX();
-                int mouseY = e.getY();
-                System.out.println(e.getPoint());
-                int indexX = mouseX / panel.getRectSize();
-                int indexY = mouseY / panel.getRectSize();
-                try {
-                    //matrix[indexX][indexY] = true;
-                    map.setStateOfPoint(indexX, indexY, true);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-                panel.repaint();
+
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-
+                (new Thread(() -> {
+                    int mouseX = e.getX();
+                    int mouseY = e.getY();
+                    System.out.println(e.getPoint());
+                    int indexX = mouseX / panel.getRectSize();
+                    int indexY = mouseY / panel.getRectSize();
+                    try {
+                        //matrix[indexX][indexY] = true;
+                        map.setStateOfPoint(indexX, indexY, true);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    panel.updateStates(map.getMap());
+                })).start();
             }
 
             @Override
@@ -71,6 +75,7 @@ public class Display extends JFrame {
 
             }
         });
+        setLocation(200, 0);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -78,21 +83,26 @@ public class Display extends JFrame {
 
 class DrawPanel extends JPanel {
     private boolean[][] map = null;
-    
+
     private int rectSize = 0;
-    
+
     private int size = 0;
 
     DrawPanel(int size) {
         this.size = size;
         this.rectSize = 800 / size;
+        this.map = new boolean[size][size];
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j)
+                this.map[i][j] = false;
+        }
     }
 
     public int getRectSize() {
         return rectSize;
     }
 
-    public void UpdateStates(boolean[][] map) {
+    public void updateStates(boolean[][] map) {
         this.map = map;
         repaint();
     }
