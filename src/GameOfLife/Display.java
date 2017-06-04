@@ -67,6 +67,7 @@ public class Display extends JFrame {
         });
         setLocation(200, 0);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
     }
 }
 
